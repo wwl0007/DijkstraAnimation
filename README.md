@@ -1,6 +1,8 @@
 # DijkstraAnimation
 Final Project for my Graph Algorithms Class
 
-# How to Compile:
+# Navigate to Folder
 cd ~/DijkstraAnimation
+
+# Compile a Scene:
 manim -qm -p DijkstrasAlgorithm.py [SceneName]
