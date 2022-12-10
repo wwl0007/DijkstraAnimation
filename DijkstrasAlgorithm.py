@@ -38,6 +38,7 @@ class Run(Scene):
             [[str(G.nodes["a"]["cost"])],[str(G.nodes["b"]["cost"])], [str(G.nodes["c"]["cost"])], [str(G.nodes["d"]["cost"])], [str(G.nodes["e"]["cost"])], [str(G.nodes["f"]["cost"])]],
             row_labels=[Text("A"), Text("B"), Text("C"), Text("D"), Text("E"), Text("F")],
             col_labels=[Text("Cost")],
+            top_left_entry=Text("Node"),
             include_outer_lines=True).scale(0.7)
         # Convert the networkx graph elements to manim graph elements
         vertices = list(G.nodes)
