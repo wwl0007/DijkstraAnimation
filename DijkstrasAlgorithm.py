@@ -65,6 +65,10 @@ class Run(Scene):
         self.play(Create(graph, run_time = 5))
         self.play(graph.animate.shift(0.35 * RIGHT))
 
+        # Create Arrays to Store Table Cells
+        node_table_cells = []
+        cost_table_cells = []
+
         # Create Storage Values for Node Table Cells
         node_a_table_cell = table.get_entries((2,1)).set_color(WHITE)
         node_b_table_cell = table.get_entries((3,1)).set_color(WHITE)
@@ -72,6 +76,14 @@ class Run(Scene):
         node_d_table_cell = table.get_entries((5,1)).set_color(WHITE)
         node_e_table_cell = table.get_entries((6,1)).set_color(WHITE)
         node_f_table_cell = table.get_entries((7,1)).set_color(WHITE)
+
+        # Add Node Table Cells to Storage Array
+        node_table_cells.append(node_a_table_cell)
+        node_table_cells.append(node_b_table_cell)
+        node_table_cells.append(node_c_table_cell)
+        node_table_cells.append(node_d_table_cell)
+        node_table_cells.append(node_e_table_cell)
+        node_table_cells.append(node_f_table_cell)
 
         # Create Storage Values for Cost Table Cells
         cost_a_table_cell = table.get_entries((2,2)).set_color(WHITE)
@@ -81,17 +93,34 @@ class Run(Scene):
         cost_e_table_cell = table.get_entries((6,2)).set_color(WHITE)
         cost_f_table_cell = table.get_entries((7,2)).set_color(WHITE)
 
+        # Add Node Table Cells to Storage Array
+        cost_table_cells.append(cost_a_table_cell)
+        cost_table_cells.append(cost_b_table_cell)
+        cost_table_cells.append(cost_c_table_cell)
+        cost_table_cells.append(cost_d_table_cell)
+        cost_table_cells.append(cost_e_table_cell)
+        cost_table_cells.append(cost_f_table_cell)
+
         # ANIMATION RUN CODE
-        self.play_hardcoded_animation()
+
+        '''
+        self.color_vertex(graph[("a")], RED)
+        self.color_edge(graph.edges[("a", "b")], RED)
+        self.change_cell_text(cost_a_table_cell, "0", WHITE)
+        '''
+
+        self.play_hardcoded_animation(graph, cost_table_cells, node_table_cells)
 
         # Initiate a wait process to ensure the animation finishes as intended
         self.wait(5)
 
+    # DIJKSTRAS ALGORITHM IMPLEMENTATION
+
     # CUSTOM ANIMATION FUNCTIONS
-    def play_hardcoded_animation(self):
-        self.color_vertex(graph[("a")], RED)
-        self.color_edge(graph.edges[("a", "b")], RED)
-        self.change_cell_text(cost_a_table_cell, "0", WHITE)
+    def play_hardcoded_animation(self, animated_graph, cost_cell_array, node_cell_array):
+        self.color_vertex(animated_graph[("a")], RED)
+        self.color_edge(animated_graph.edges[("a", "b")], RED)
+        self.change_cell_text(cost_cell_array[0], "0", WHITE)
 
     def color_vertex(self, vertex, color):
         self.play(
