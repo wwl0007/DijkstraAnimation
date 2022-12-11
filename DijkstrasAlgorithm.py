@@ -87,16 +87,18 @@ class Run(Scene):
         self.color_edge(graph.edges[("a", "b")], RED)
         self.change_cell_text(cost_a_table_cell, "0", WHITE)
 
+
+
+
+
+
+
+
+
+
+
         # Initiate a wait process to ensure the animation finishes as intended
         self.wait(5)
-
-
-
-
-
-
-
-
 
     # CUSTOM ANIMATION FUNCTIONS
     def color_vertex(self, vertex, color):
