@@ -6,8 +6,6 @@ from manim import *
 
 import networkx as nx
 
-import random
-
 class Run(Scene):
     # CONSTRUCTION CODE
     def construct(self):
@@ -101,36 +99,36 @@ class Run(Scene):
         cost_table_cells.append(cost_e_table_cell)
         cost_table_cells.append(cost_f_table_cell)
 
-        # ANIMATION RUN CODE
-
-        '''
-        self.color_vertex(graph[("a")], RED)
-        self.color_edge(graph.edges[("a", "b")], RED)
-        self.change_cell_text(cost_a_table_cell, "0", WHITE)
-        '''
-
+        # Run the animation - comment out the animation version that you don't want to run
+        # You can either run the hard-coded version or the algorithmic version
         self.play_hardcoded_animation(graph, cost_table_cells, node_table_cells)
+        #self.play_algorithmic_animation(G, v graph, cost_table_cells, node_table_cells) - FUNCTIONALITY COMING SOON
 
         # Initiate a wait process to ensure the animation finishes as intended
         self.wait(5)
 
-    # DIJKSTRAS ALGORITHM IMPLEMENTATION
+    # FULL ANIMATION FUNCTIONS
+    # DIJKSTRAS ALGORITHM IMPLEMENTATION (ALGORITHMIC VERSION)
 
-    # CUSTOM ANIMATION FUNCTIONS
+    # HARDCODED DEMONSTRATION (HARDCODED VERSION)
     def play_hardcoded_animation(self, animated_graph, cost_cell_array, node_cell_array):
         self.color_vertex(animated_graph[("a")], RED)
         self.color_edge(animated_graph.edges[("a", "b")], RED)
         self.change_cell_text(cost_cell_array[0], "0", WHITE)
 
+
+    # CUSTOM ANIMATION FUNCTIONS
+    # Function that colors the fill of a vertex
     def color_vertex(self, vertex, color):
         self.play(
             vertex[0].animate.set_color(color),
             vertex[1].animate.set_color(BLACK),
             runtime=3
         )
-
+    # Function that colors an edge in a graph
     def color_edge(self, edge, color):
         self.play(edge.animate.set_color(color), run_time = 1.5)
 
+    # Function that changes the text of a cell in a table
     def change_cell_text(self, cell, text, color):
         self.play(Transform(cell, Text(text).scale(0.7).move_to(cell).set_color(color)))
