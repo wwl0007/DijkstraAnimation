@@ -75,20 +75,20 @@ class Run(Scene):
         self.play(graph.edges[("a", "b")].animate.set_color(RED), run_time = 2.5)
 
         # Create Storage Values for Node Table Cells
-        node_a_table_cell = table.get_entries((2,1))
-        node_b_table_cell = table.get_entries((3,1))
-        node_c_table_cell = table.get_entries((4,1))
-        node_d_table_cell = table.get_entries((5,1))
-        node_e_table_cell = table.get_entries((6,1))
-        node_f_table_cell = table.get_entries((7,1))
+        node_a_table_cell = table.get_entries((2,1)).set_color(WHITE)
+        node_b_table_cell = table.get_entries((3,1)).set_color(WHITE)
+        node_c_table_cell = table.get_entries((4,1)).set_color(WHITE)
+        node_d_table_cell = table.get_entries((5,1)).set_color(WHITE)
+        node_e_table_cell = table.get_entries((6,1)).set_color(WHITE)
+        node_f_table_cell = table.get_entries((7,1)).set_color(WHITE)
 
         # Create Storage Values for Cost Table Cells
         cost_a_table_cell = table.get_entries((2,2)).set_color(WHITE)
-        cost_b_table_cell = table.get_entries((3,2))
-        cost_c_table_cell = table.get_entries((4,2))
-        cost_d_table_cell = table.get_entries((5,2))
-        cost_e_table_cell = table.get_entries((6,2))
-        cost_f_table_cell = table.get_entries((7,2))
+        cost_b_table_cell = table.get_entries((3,2)).set_color(WHITE)
+        cost_c_table_cell = table.get_entries((4,2)).set_color(WHITE)
+        cost_d_table_cell = table.get_entries((5,2)).set_color(WHITE)
+        cost_e_table_cell = table.get_entries((6,2)).set_color(WHITE)
+        cost_f_table_cell = table.get_entries((7,2)).set_color(WHITE)
 
         # Change source node cost table value
         self.play(Transform(cost_a_table_cell, Text("0").scale(0.7).move_to(cost_a_table_cell).set_color(cost_a_table_cell.get_color())))
