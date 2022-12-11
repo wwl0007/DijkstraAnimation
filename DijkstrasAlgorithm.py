@@ -48,14 +48,13 @@ class Run(Scene):
         # Create and position edge labels for the graph
         for edge in edges:
             graph.edges[edge].set_color(BLUE)
-            #FIND A WAY TO STORE TEST TEXT TO AN EDGE WHEN UPDATING
-            testText = MathTex("22", color=WHITE).scale(0.7).shift(
+            edge_label_value = G.edges[edge]['weight']
+            edge_label = MathTex(edge_label_value, color=WHITE).scale(0.7).shift(
                 [0,0.25,0]
             ).rotate(
                 graph.edges[(edge[0],edge[1])].get_angle()+PI, about_point=ORIGIN
             ).shift(graph.edges[(edge[0],edge[1])].get_center())
-            graph.add(testText)
-            #graph.add(testText.move_to(graph.edges[(edge[0],edge[1])].get_center()))
+            graph.add(edge_label)
         # Group the table and graph together for animation purposes
         g = Group(
             table, graph
@@ -68,10 +67,12 @@ class Run(Scene):
 
         # PAUSE FOR NOW
 
-        graph[(source_node)].fill_color = RED
-        graph[(source_node)].fill_color = YELLOW
-        #self.play(graph[(source_node)].animate.set_color(BLUE))
-        self.play(graph.edges[("a", "b")].animate.set_color(RED), run_time = 3)
+        self.play(
+            graph[("a")][0].animate.set_color(RED),
+            graph[("a")][1].animate.set_color(BLACK),
+            runtime=3
+        )
+        self.play(graph.edges[("a", "b")].animate.set_color(RED), run_time = 2.5)
 
         # Table Test
         node_a = table.get_entries((2,1)).set_color(BLUE)
