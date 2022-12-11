@@ -87,16 +87,6 @@ class Run(Scene):
         self.color_edge(graph.edges[("a", "b")], RED)
         self.change_cell_text(cost_a_table_cell, "0", WHITE)
 
-
-
-
-
-
-
-
-
-
-
         # Initiate a wait process to ensure the animation finishes as intended
         self.wait(5)
 
@@ -113,38 +103,3 @@ class Run(Scene):
 
     def change_cell_text(self, cell, text, color):
         self.play(Transform(cell, Text(text).scale(0.7).move_to(cell).set_color(color)))
-
-        '''
-        OLD CODE
-        #source_node set color
-        #current_node set color
-        self.play(Transform(node_a, Text("D").scale(0.7).move_to(node_a).set_color(node_a.get_color())))
-        self.play(Transform(node_b, Text("C").scale(0.7).move_to(node_b).set_color(node_b.get_color())))
-        self.play(Transform(node_c, Text("Z").scale(0.7).move_to(node_c).set_color(node_c.get_color())))
-        self.play(Transform(node_d, Text("W").scale(0.7).move_to(node_d).set_color(node_d.get_color())))
-
-        G.nodes["a"]["cost"] = 22
-        #self.play(ReplacementTransform(node_a, Text(str(G.nodes["a"]["cost"])).scale(0.7).move_to(node_a).set_color(node_a.get_color())))
-        self.loopTest("WesleyWatson", node_a, G.nodes["a"]["cost"])
-
-
-
-    def loopTest(self, word, nodeChosen, cost):
-        wordTest = word
-        for letter in wordTest:
-            cost = random.randint(0, 9)
-            self.play(Transform(nodeChosen, Text(str(cost)).scale(0.7).move_to(nodeChosen).set_color(nodeChosen.get_color())))
-
-    OLD ANIMATION CODE 1
-    self.play(
-        graph[("a")][0].animate.set_color(RED),
-        graph[("a")][1].animate.set_color(BLACK),
-        runtime=3
-    )
-    self.play(graph.edges[("a", "b")].animate.set_color(RED), run_time = 2.5)
-
-
-
-    # Change source node cost table value
-    self.play(Transform(cost_a_table_cell, Text("0").scale(0.7).move_to(cost_a_table_cell).set_color(cost_a_table_cell.get_color())))
-            '''
