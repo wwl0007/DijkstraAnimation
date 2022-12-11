@@ -45,14 +45,27 @@ class Run(Scene):
         edges = list(G.edges)
         # Construct the manim graph
         graph = Graph(vertices, edges, layout="spring", layout_scale=3, labels=True, root_vertex="None").scale(1.2)
+        # Create and position edge labels for the graph
+        for edge in edges:
+            graph.edges[edge].set_color(BLUE)
+            #FIND A WAY TO STORE TEST TEXT TO AN EDGE WHEN UPDATING
+            testText = MathTex("22", color=WHITE).scale(0.7).shift(
+                [0,0.25,0]
+            ).rotate(
+                graph.edges[(edge[0],edge[1])].get_angle()+PI, about_point=ORIGIN
+            ).shift(graph.edges[(edge[0],edge[1])].get_center())
+            graph.add(testText)
+            #graph.add(testText.move_to(graph.edges[(edge[0],edge[1])].get_center()))
         # Group the table and graph together for animation purposes
         g = Group(
             table, graph
         ).arrange_in_grid(buff=1)
+
         # Create and position the table and graph that will be used in this animation
         self.play(table.create())
         self.play(Create(graph, run_time = 5))
         self.play(graph.animate.shift(0.35 * RIGHT))
+
         # PAUSE FOR NOW
 
         graph[(source_node)].fill_color = RED
