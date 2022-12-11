@@ -44,7 +44,7 @@ class Run(Scene):
         vertices = list(G.nodes)
         edges = list(G.edges)
         # Construct the manim graph
-        graph = Graph(vertices, edges, layout="spring", layout_scale=3, root_vertex="None").scale(1.2)
+        graph = Graph(vertices, edges, layout="spring", layout_scale=3, labels=True, root_vertex="None").scale(1.2)
         # Group the table and graph together for animation purposes
         g = Group(
             table, graph
@@ -55,8 +55,9 @@ class Run(Scene):
         self.play(graph.animate.shift(0.35 * RIGHT))
         # PAUSE FOR NOW
 
-
-        self.play(graph[(source_node)].animate.set_color(BLUE))
+        graph[(source_node)].fill_color = RED
+        graph[(source_node)].fill_color = YELLOW
+        #self.play(graph[(source_node)].animate.set_color(BLUE))
         self.play(graph.edges[("a", "b")].animate.set_color(RED), run_time = 3)
 
         # Table Test
