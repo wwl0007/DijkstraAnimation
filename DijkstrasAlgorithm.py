@@ -36,7 +36,7 @@ class Run(Scene):
         # Create a table used to track the lowest possible cost from the source node to another node
         table = MobjectTable(
             [[MathTex("\infty")],[MathTex("\infty")], [MathTex("\infty")], [MathTex("\infty")], [MathTex("\infty")], [MathTex("\infty")]],
-            row_labels=[Text("A"), Text("B"), Text("C"), Text("D"), Text("E"), Text("F")],
+            row_labels=[Text("a"), Text("b"), Text("c"), Text("d"), Text("e"), Text("f")],
             col_labels=[Text("Cost")],
             top_left_entry=Text("Node"),
             include_outer_lines=True).scale(0.7)
@@ -82,15 +82,17 @@ class Run(Scene):
         cost_f_table_cell = table.get_entries((7,2)).set_color(WHITE)
 
         # ANIMATION RUN CODE
-
-        self.color_vertex(graph[("a")], RED)
-        self.color_edge(graph.edges[("a", "b")], RED)
-        self.change_cell_text(cost_a_table_cell, "0", WHITE)
+        self.play_hardcoded_animation()
 
         # Initiate a wait process to ensure the animation finishes as intended
         self.wait(5)
 
     # CUSTOM ANIMATION FUNCTIONS
+    def play_hardcoded_animation(self):
+        self.color_vertex(graph[("a")], RED)
+        self.color_edge(graph.edges[("a", "b")], RED)
+        self.change_cell_text(cost_a_table_cell, "0", WHITE)
+
     def color_vertex(self, vertex, color):
         self.play(
             vertex[0].animate.set_color(color),
