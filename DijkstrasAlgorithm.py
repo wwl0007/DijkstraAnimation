@@ -34,8 +34,8 @@ class Run(Scene):
         # Declare the source node; it can be changed using the line below as needed
         source_node = "a"
         # Create a table used to track the lowest possible cost from the source node to another node
-        table = Table(
-            [[MathTex(\infty)],[MathTex(\infty)], [MathTex(\infty)], [MathTex(\infty)], [MathTex(\infty)], [MathTex(\infty)],
+        table = MobjectTable(
+            [[MathTex("\infty")],[MathTex("\infty")], [MathTex("\infty")], [MathTex("\infty")], [MathTex("\infty")], [MathTex("\infty")]],
             row_labels=[Text("A"), Text("B"), Text("C"), Text("D"), Text("E"), Text("F")],
             col_labels=[Text("Cost")],
             top_left_entry=Text("Node"),
@@ -83,16 +83,21 @@ class Run(Scene):
         node_f_table_cell = table.get_entries((7,1))
 
         # Create Storage Values for Cost Table Cells
-        cost_a_table_cell = table.get_entries((2,2))
+        cost_a_table_cell = table.get_entries((2,2)).set_color(WHITE)
         cost_b_table_cell = table.get_entries((3,2))
         cost_c_table_cell = table.get_entries((4,2))
         cost_d_table_cell = table.get_entries((5,2))
         cost_e_table_cell = table.get_entries((6,2))
         cost_f_table_cell = table.get_entries((7,2))
 
+        # Change source node cost table value
+        self.play(Transform(cost_a_table_cell, Text("0").scale(0.7).move_to(cost_a_table_cell).set_color(cost_a_table_cell.get_color())))
 
+        # Initiate a wait process to ensure the animation finishes as intended
+        self.wait()
 
-
+        '''
+        LOOP TEST CODE
         #source_node set color
         #current_node set color
         self.play(Transform(node_a, Text("D").scale(0.7).move_to(node_a).set_color(node_a.get_color())))
@@ -104,11 +109,11 @@ class Run(Scene):
         #self.play(ReplacementTransform(node_a, Text(str(G.nodes["a"]["cost"])).scale(0.7).move_to(node_a).set_color(node_a.get_color())))
         self.loopTest("WesleyWatson", node_a, G.nodes["a"]["cost"])
 
-        # Initiate a wait process to ensure the animation finishes as intended
-        self.wait()
+
 
     def loopTest(self, word, nodeChosen, cost):
         wordTest = word
         for letter in wordTest:
             cost = random.randint(0, 9)
             self.play(Transform(nodeChosen, Text(str(cost)).scale(0.7).move_to(nodeChosen).set_color(nodeChosen.get_color())))
+        '''
