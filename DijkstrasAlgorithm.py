@@ -83,23 +83,31 @@ class Run(Scene):
 
         # ANIMATION RUN CODE
 
-        color_vertex("a", RED)
-        color_edge(("a, b"), RED)
-        change_cell_text(cost_a_table_cell, 0, WHITE)
+        self.color_vertex(graph[("a")], RED)
+        self.color_edge(graph.edges[("a", "b")], RED)
+        self.change_cell_text(cost_a_table_cell, "0", WHITE)
 
         # Initiate a wait process to ensure the animation finishes as intended
-        self.wait()
+        self.wait(5)
+
+
+
+
+
+
+
+
 
     # CUSTOM ANIMATION FUNCTIONS
     def color_vertex(self, vertex, color):
         self.play(
-            graph[(vertex)][0].animate.set_color(color),
-            graph[(vertex)][1].animate.set_color(BLACK),
+            vertex[0].animate.set_color(color),
+            vertex[1].animate.set_color(BLACK),
             runtime=3
         )
 
     def color_edge(self, edge, color):
-        self.play(graph.edges[edge].animate.set_color(color), run_time = 2)
+        self.play(edge.animate.set_color(color), run_time = 1.5)
 
     def change_cell_text(self, cell, text, color):
         self.play(Transform(cell, Text(text).scale(0.7).move_to(cell).set_color(color)))
