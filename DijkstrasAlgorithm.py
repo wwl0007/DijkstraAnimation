@@ -112,9 +112,26 @@ class Run(Scene):
 
     # HARDCODED DEMONSTRATION (HARDCODED VERSION)
     def play_hardcoded_animation(self, animated_graph, cost_cell_array, node_cell_array):
+        # Step 1. Source Node
         self.color_vertex(animated_graph[("a")], RED)
-        self.color_edge(animated_graph.edges[("a", "b")], RED)
+        self.change_cell_text(node_cell_array[0], "A", RED)
         self.change_cell_text(cost_cell_array[0], "0", WHITE)
+        # Step 2. Travel to node d
+        self.color_edge(animated_graph.edges[("a", "b")], RED)
+        self.color_edge(animated_graph.edges[("a", "c")], RED)
+        self.color_edge(animated_graph.edges[("a", "d")], RED)
+        self.change_cell_text(node_cell_array[1], "B", ORANGE)
+        self.change_cell_text(node_cell_array[2], "C", ORANGE)
+        self.change_cell_text(node_cell_array[3], "D", ORANGE)
+        self.change_cell_text(cost_cell_array[1], "17", ORANGE)
+        self.change_cell_text(cost_cell_array[2], "12", ORANGE)
+        self.change_cell_text(cost_cell_array[3], "8", ORANGE)
+        self.color_edge(animated_graph.edges[("a", "d")], GREEN)
+        self.change_cell_text(cost_cell_array[3], "8", GREEN)
+        self.color_vertex(animated_graph[("d")], GREEN)
+
+
+        
 
 
     # CUSTOM ANIMATION FUNCTIONS
