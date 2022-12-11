@@ -9,7 +9,7 @@ import networkx as nx
 import random
 
 class Run(Scene):
-
+    # CONSTRUCTION CODE
     def construct(self):
         # Create a default graph in networkx
         G = nx.Graph()
@@ -65,15 +65,6 @@ class Run(Scene):
         self.play(Create(graph, run_time = 5))
         self.play(graph.animate.shift(0.35 * RIGHT))
 
-        # PAUSE FOR NOW
-
-        self.play(
-            graph[("a")][0].animate.set_color(RED),
-            graph[("a")][1].animate.set_color(BLACK),
-            runtime=3
-        )
-        self.play(graph.edges[("a", "b")].animate.set_color(RED), run_time = 2.5)
-
         # Create Storage Values for Node Table Cells
         node_a_table_cell = table.get_entries((2,1)).set_color(WHITE)
         node_b_table_cell = table.get_entries((3,1)).set_color(WHITE)
@@ -90,14 +81,31 @@ class Run(Scene):
         cost_e_table_cell = table.get_entries((6,2)).set_color(WHITE)
         cost_f_table_cell = table.get_entries((7,2)).set_color(WHITE)
 
-        # Change source node cost table value
-        self.play(Transform(cost_a_table_cell, Text("0").scale(0.7).move_to(cost_a_table_cell).set_color(cost_a_table_cell.get_color())))
+        # ANIMATION RUN CODE
+
+        color_vertex("a", RED)
+        color_edge(("a, b"), RED)
+        change_cell_text(cost_a_table_cell, 0, WHITE)
 
         # Initiate a wait process to ensure the animation finishes as intended
         self.wait()
 
+    # CUSTOM ANIMATION FUNCTIONS
+    def color_vertex(self, vertex, color):
+        self.play(
+            graph[(vertex)][0].animate.set_color(color),
+            graph[(vertex)][1].animate.set_color(BLACK),
+            runtime=3
+        )
+
+    def color_edge(self, edge, color):
+        self.play(graph.edges[edge].animate.set_color(color), run_time = 2)
+
+    def change_cell_text(self, cell, text, color):
+        self.play(Transform(cell, Text(text).scale(0.7).move_to(cell).set_color(color)))
+
         '''
-        LOOP TEST CODE
+        OLD CODE
         #source_node set color
         #current_node set color
         self.play(Transform(node_a, Text("D").scale(0.7).move_to(node_a).set_color(node_a.get_color())))
@@ -116,4 +124,17 @@ class Run(Scene):
         for letter in wordTest:
             cost = random.randint(0, 9)
             self.play(Transform(nodeChosen, Text(str(cost)).scale(0.7).move_to(nodeChosen).set_color(nodeChosen.get_color())))
-        '''
+
+    OLD ANIMATION CODE 1
+    self.play(
+        graph[("a")][0].animate.set_color(RED),
+        graph[("a")][1].animate.set_color(BLACK),
+        runtime=3
+    )
+    self.play(graph.edges[("a", "b")].animate.set_color(RED), run_time = 2.5)
+
+
+
+    # Change source node cost table value
+    self.play(Transform(cost_a_table_cell, Text("0").scale(0.7).move_to(cost_a_table_cell).set_color(cost_a_table_cell.get_color())))
+            '''
