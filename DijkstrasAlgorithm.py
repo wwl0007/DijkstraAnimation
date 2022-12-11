@@ -35,7 +35,7 @@ class Run(Scene):
         source_node = "a"
         # Create a table used to track the lowest possible cost from the source node to another node
         table = Table(
-            [[str(G.nodes["a"]["cost"])],[str(G.nodes["b"]["cost"])], [str(G.nodes["c"]["cost"])], [str(G.nodes["d"]["cost"])], [str(G.nodes["e"]["cost"])], [str(G.nodes["f"]["cost"])]],
+            [[MathTex(\infty)],[MathTex(\infty)], [MathTex(\infty)], [MathTex(\infty)], [MathTex(\infty)], [MathTex(\infty)],
             row_labels=[Text("A"), Text("B"), Text("C"), Text("D"), Text("E"), Text("F")],
             col_labels=[Text("Cost")],
             top_left_entry=Text("Node"),
@@ -74,17 +74,27 @@ class Run(Scene):
         )
         self.play(graph.edges[("a", "b")].animate.set_color(RED), run_time = 2.5)
 
-        # Table Test
-        node_a = table.get_entries((2,1)).set_color(BLUE)
-        node_b = table.get_entries((3,1)).set_color(BLUE)
-        node_c = table.get_entries((4,1)).set_color(BLUE)
-        node_d = table.get_entries((5,1)).set_color(BLUE)
-        node_e = table.get_entries((6,1)).set_color(BLUE)
-        node_f = table.get_entries((7,1)).set_color(BLUE)
+        # Create Storage Values for Node Table Cells
+        node_a_table_cell = table.get_entries((2,1))
+        node_b_table_cell = table.get_entries((3,1))
+        node_c_table_cell = table.get_entries((4,1))
+        node_d_table_cell = table.get_entries((5,1))
+        node_e_table_cell = table.get_entries((6,1))
+        node_f_table_cell = table.get_entries((7,1))
+
+        # Create Storage Values for Cost Table Cells
+        cost_a_table_cell = table.get_entries((2,2))
+        cost_b_table_cell = table.get_entries((3,2))
+        cost_c_table_cell = table.get_entries((4,2))
+        cost_d_table_cell = table.get_entries((5,2))
+        cost_e_table_cell = table.get_entries((6,2))
+        cost_f_table_cell = table.get_entries((7,2))
+
+
+
 
         #source_node set color
         #current_node set color
-
         self.play(Transform(node_a, Text("D").scale(0.7).move_to(node_a).set_color(node_a.get_color())))
         self.play(Transform(node_b, Text("C").scale(0.7).move_to(node_b).set_color(node_b.get_color())))
         self.play(Transform(node_c, Text("Z").scale(0.7).move_to(node_c).set_color(node_c.get_color())))
