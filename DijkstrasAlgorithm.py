@@ -4,9 +4,10 @@
 # Original Psuedocode for IPQ and Dijkstra's algorithm created by Dr. Haynes Heaton
 # Implementation code for IPQ created by Dr. Haynes Heaton
 
-from manim import *
-
+# Import Statements
 import networkx as nx
+from manim import *
+from IndexedPriorityQueue import *
 
 class Run(Scene):
     # CONSTRUCTION CODE
