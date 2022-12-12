@@ -111,15 +111,19 @@ class Run(Scene):
     # DIJKSTRAS ALGORITHM IMPLEMENTATION (ALGORITHMIC VERSION)
 
     # HARDCODED DEMONSTRATION (HARDCODED VERSION)
-    def play_hardcoded_animation(self, animated_graph, cost_cell_array, node_cell_array):
+    def play_hardcoded_animation(self, network_x_graph, animated_graph, cost_cell_array, node_cell_array):
         # Step 1. Source Node
+        network_x_graph["a"]["cost"] = 22
         self.color_vertex(animated_graph[("a")], RED)
         self.change_cell_text(node_cell_array[0], "a", RED)
-        self.change_cell_text(cost_cell_array[0], "0", RED)
+        self.change_cell_text(cost_cell_array[0], str(network_x_graph["a"]["cost"]), RED)
         # Step 2. Travel to node d
-        self.color_edge(animated_graph.edges[("a", "b")], YELLOW)
-        self.color_edge(animated_graph.edges[("a", "c")], YELLOW)
-        self.color_edge(animated_graph.edges[("a", "d")], YELLOW)
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "b")], YELLOW),
+            self.color_edge(animated_graph.edges[("a", "c")], YELLOW),
+            self.color_edge(animated_graph.edges[("a", "d")], YELLOW),
+            run_time=3
+        )
         self.change_cell_text(node_cell_array[1], "b", YELLOW)
         self.change_cell_text(node_cell_array[2], "c", YELLOW)
         self.change_cell_text(node_cell_array[3], "d", YELLOW)
@@ -135,10 +139,13 @@ class Run(Scene):
         self.color_edge(animated_graph.edges[("d", "f")], YELLOW)
         self.change_cell_text(node_cell_array[5], "f", YELLOW)
         self.change_cell_text(cost_cell_array[5], "23", YELLOW)
-        self.color_edge(animated_graph.edges[("a", "d")], GREEN)
-        self.change_cell_text(cost_cell_array[3], "8", GREEN)
-        self.change_cell_text(node_cell_array[3], "d", GREEN)
-        self.color_vertex(animated_graph[("d")], GREEN)
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "d")], GREEN),
+            self.change_cell_text(cost_cell_array[3], "8", GREEN),
+            self.change_cell_text(node_cell_array[3], "d", GREEN),
+            self.color_vertex(animated_graph[("d")], GREEN),
+            run_time=2
+        )
         self.color_edge(animated_graph.edges[("a", "c")], PINK)
         self.change_cell_text(cost_cell_array[2], "12", PINK)
         self.change_cell_text(node_cell_array[2], "c", PINK)
@@ -222,7 +229,7 @@ class Run(Scene):
         self.play(
             vertex[0].animate.set_color(color),
             vertex[1].animate.set_color(BLACK),
-            runtime=3
+            run_time=3
         )
     # Function that colors an edge in a graph
     def color_edge(self, edge, color):
