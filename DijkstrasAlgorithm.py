@@ -24,7 +24,7 @@ class Run(Scene):
         G.add_edge("a","c", weight=12)
         G.add_edge("a","d", weight=8)
         G.add_edge("b","c", weight=1)
-        G.add_edge("b","e", weight=6)
+        G.add_edge("b","e", weight=4)
         G.add_edge("c","d", weight=7)
         G.add_edge("c","f", weight=11)
         G.add_edge("d","f", weight=15)
