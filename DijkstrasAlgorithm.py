@@ -387,6 +387,10 @@ class Run(Scene):
             self.change_cell_text(node_cell_array[1], "b", GREEN),
             self.color_vertex(animated_graph[("b")], GREEN),
             self.color_vertex_label(animated_graph[("b")], BLACK),
+            self.color_vertex(animated_graph[("a")], GREEN),
+            self.color_vertex_label(animated_graph[("a")], BLACK),
+            self.color_vertex(animated_graph[("c")], GREEN),
+            self.color_vertex_label(animated_graph[("c")], BLACK),
             run_time=edge_change_run_time
         )
         self.wait(3)
@@ -397,6 +401,10 @@ class Run(Scene):
             self.change_cell_text(node_cell_array[1], "b", WHITE),
             self.color_vertex(animated_graph[("b")], WHITE),
             self.color_vertex_label(animated_graph[("b")], BLACK),
+            self.color_vertex(animated_graph[("a")], WHITE),
+            self.color_vertex_label(animated_graph[("a")], BLACK),
+            self.color_vertex(animated_graph[("c")], WHITE),
+            self.color_vertex_label(animated_graph[("c")], BLACK),
             run_time=edge_change_run_time
         )
         self.wait(3)
@@ -406,6 +414,8 @@ class Run(Scene):
             self.change_cell_text(node_cell_array[2], "c", GREEN),
             self.color_vertex(animated_graph[("c")], GREEN),
             self.color_vertex_label(animated_graph[("c")], BLACK),
+            self.color_vertex(animated_graph[("a")], GREEN),
+            self.color_vertex_label(animated_graph[("a")], BLACK),
             run_time=edge_change_run_time
         )
         self.wait(3)
@@ -415,6 +425,8 @@ class Run(Scene):
             self.change_cell_text(node_cell_array[2], "c", WHITE),
             self.color_vertex(animated_graph[("c")], WHITE),
             self.color_vertex_label(animated_graph[("c")], BLACK),
+            self.color_vertex(animated_graph[("a")], WHITE),
+            self.color_vertex_label(animated_graph[("a")], BLACK),
             run_time=edge_change_run_time
         )
         self.wait(3)
@@ -424,6 +436,8 @@ class Run(Scene):
             self.change_cell_text(node_cell_array[3], "d", GREEN),
             self.color_vertex(animated_graph[("d")], GREEN),
             self.color_vertex_label(animated_graph[("d")], BLACK),
+            self.color_vertex(animated_graph[("a")], GREEN),
+            self.color_vertex_label(animated_graph[("a")], BLACK),
             run_time=edge_change_run_time
         )
         self.wait(3)
@@ -433,6 +447,8 @@ class Run(Scene):
             self.change_cell_text(node_cell_array[3], "d", WHITE),
             self.color_vertex(animated_graph[("d")], WHITE),
             self.color_vertex_label(animated_graph[("d")], BLACK),
+            self.color_vertex(animated_graph[("a")], WHITE),
+            self.color_vertex_label(animated_graph[("a")], BLACK),
             run_time=edge_change_run_time
         )
         self.play(
@@ -443,6 +459,12 @@ class Run(Scene):
             self.change_cell_text(node_cell_array[4], "e", GREEN),
             self.color_vertex(animated_graph[("e")], GREEN),
             self.color_vertex_label(animated_graph[("e")], BLACK),
+            self.color_vertex(animated_graph[("a")], GREEN),
+            self.color_vertex_label(animated_graph[("a")], BLACK),
+            self.color_vertex(animated_graph[("b")], GREEN),
+            self.color_vertex_label(animated_graph[("b")], BLACK),
+            self.color_vertex(animated_graph[("c")], GREEN),
+            self.color_vertex_label(animated_graph[("c")], BLACK),
             run_time=edge_change_run_time
         )
         self.wait(3)
@@ -454,6 +476,12 @@ class Run(Scene):
             self.change_cell_text(node_cell_array[4], "e", WHITE),
             self.color_vertex(animated_graph[("e")], WHITE),
             self.color_vertex_label(animated_graph[("e")], BLACK),
+            self.color_vertex(animated_graph[("a")], WHITE),
+            self.color_vertex_label(animated_graph[("a")], BLACK),
+            self.color_vertex(animated_graph[("b")], WHITE),
+            self.color_vertex_label(animated_graph[("b")], BLACK),
+            self.color_vertex(animated_graph[("c")], WHITE),
+            self.color_vertex_label(animated_graph[("c")], BLACK),
             run_time=edge_change_run_time
         )
         self.wait(3)
@@ -466,6 +494,14 @@ class Run(Scene):
             self.change_cell_text(node_cell_array[5], "f", GREEN),
             self.color_vertex(animated_graph[("f")], GREEN),
             self.color_vertex_label(animated_graph[("f")], BLACK),
+            self.color_vertex(animated_graph[("e")], GREEN),
+            self.color_vertex_label(animated_graph[("e")], BLACK),
+            self.color_vertex(animated_graph[("a")], GREEN),
+            self.color_vertex_label(animated_graph[("a")], BLACK),
+            self.color_vertex(animated_graph[("b")], GREEN),
+            self.color_vertex_label(animated_graph[("b")], BLACK),
+            self.color_vertex(animated_graph[("c")], GREEN),
+            self.color_vertex_label(animated_graph[("c")], BLACK),
             run_time=edge_change_run_time
         )
         self.wait(3)
@@ -478,6 +514,14 @@ class Run(Scene):
             self.change_cell_text(node_cell_array[5], "f", WHITE),
             self.color_vertex(animated_graph[("f")], WHITE),
             self.color_vertex_label(animated_graph[("f")], BLACK),
+            self.color_vertex(animated_graph[("e")], WHITE),
+            self.color_vertex_label(animated_graph[("e")], BLACK),
+            self.color_vertex(animated_graph[("a")], WHITE),
+            self.color_vertex_label(animated_graph[("a")], BLACK),
+            self.color_vertex(animated_graph[("b")], WHITE),
+            self.color_vertex_label(animated_graph[("b")], BLACK),
+            self.color_vertex(animated_graph[("c")], WHITE),
+            self.color_vertex_label(animated_graph[("c")], BLACK),
             run_time=edge_change_run_time
         )
         self.wait(3)
