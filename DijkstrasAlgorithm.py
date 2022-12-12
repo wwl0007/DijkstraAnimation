@@ -163,6 +163,7 @@ class Run(Scene):
         self.color_edge(animated_graph.edges[("b", "c")], GREEN)
         self.change_cell_text(cost_cell_array[1], "13", GREEN)
         self.change_cell_text(node_cell_array[1], "b", GREEN)
+        self.color_vertex(animated_graph[("b")], GREEN)
         self.color_edge(animated_graph.edges[("a", "c")], PINK)
         self.color_edge(animated_graph.edges[("b", "c")], PINK)
         self.color_edge(animated_graph.edges[("b", "e")], PINK)
@@ -177,10 +178,11 @@ class Run(Scene):
         self.color_edge(animated_graph.edges[("b", "e")], GREEN)
         self.change_cell_text(cost_cell_array[4], "17", GREEN)
         self.change_cell_text(node_cell_array[4], "e", GREEN)
+        self.color_vertex(animated_graph[("e")], GREEN)
         self.color_edge(animated_graph.edges[("a", "c")], PINK)
         self.color_edge(animated_graph.edges[("b", "c")], PINK)
         self.color_edge(animated_graph.edges[("b", "e")], PINK)
-        self.color_edge(animated_graph.edges[("b", "f")], PINK)
+        self.color_edge(animated_graph.edges[("e", "f")], PINK)
         self.change_cell_text(cost_cell_array[5], "22", PINK)
         self.change_cell_text(node_cell_array[5], "f", PINK)
         self.color_vertex(animated_graph[("f")], PINK)
@@ -188,7 +190,7 @@ class Run(Scene):
         self.color_edge(animated_graph.edges[("a", "c")], GREEN)
         self.color_edge(animated_graph.edges[("b", "c")], GREEN)
         self.color_edge(animated_graph.edges[("b", "e")], GREEN)
-        self.color_edge(animated_graph.edges[("b", "f")], GREEN)
+        self.color_edge(animated_graph.edges[("e", "f")], GREEN)
         self.change_cell_text(cost_cell_array[5], "22", GREEN)
         self.change_cell_text(node_cell_array[5], "f", GREEN)
         self.color_vertex(animated_graph[("f")], GREEN)
@@ -210,9 +212,9 @@ class Run(Scene):
         self.color_edge(animated_graph.edges[("e", "f")], BLUE)
         # Step 10. Uncolor Table Elements
         for cell_value in cost_cell_array:
-            self.change_cell_text(cell, str(cell), WHITE)
+            self.change_cell_text(cell_value, "0", WHITE)
         for cell_value in node_cell_array:
-            self.change_cell_text(cell, str(cell), WHITE)
+            self.change_cell_text(cell_value, "0", WHITE)
 
     # CUSTOM ANIMATION FUNCTIONS
     # Function that colors the fill of a vertex
