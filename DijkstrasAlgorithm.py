@@ -101,7 +101,7 @@ class Run(Scene):
 
         # Run the animation - comment out the animation version that you don't want to run
         # You can either run the hard-coded version or the algorithmic version
-        self.play_hardcoded_animation(graph, cost_table_cells, node_table_cells)
+        self.play_hardcoded_animation(G, graph, cost_table_cells, node_table_cells)
         #self.play_algorithmic_animation(G, v graph, cost_table_cells, node_table_cells) - FUNCTIONALITY COMING SOON
 
         # Initiate a wait process to ensure the animation finishes as intended
@@ -112,129 +112,235 @@ class Run(Scene):
 
     # HARDCODED DEMONSTRATION (HARDCODED VERSION)
     def play_hardcoded_animation(self, network_x_graph, animated_graph, cost_cell_array, node_cell_array):
+        # Step 0. Initialize Animation Parameters
+        edge_change_run_time = 2.5
         # Step 1. Source Node
-        network_x_graph["a"]["cost"] = 22
-        self.color_vertex(animated_graph[("a")], RED)
-        self.change_cell_text(node_cell_array[0], "a", RED)
-        self.change_cell_text(cost_cell_array[0], str(network_x_graph["a"]["cost"]), RED)
+        network_x_graph.nodes["a"]["cost"] = 0
+        self.play(self.color_vertex(animated_graph[("a")], RED))
+        self.play(self.change_cell_text(node_cell_array[0], "a", RED))
+        self.play(self.change_cell_text(cost_cell_array[0], str(network_x_graph.nodes["a"]["cost"]), RED))
         # Step 2. Travel to node d
+        network_x_graph.nodes["b"]["cost"] = 17
         self.play(
             self.color_edge(animated_graph.edges[("a", "b")], YELLOW),
-            self.color_edge(animated_graph.edges[("a", "c")], YELLOW),
-            self.color_edge(animated_graph.edges[("a", "d")], YELLOW),
-            run_time=3
+            self.change_cell_text(node_cell_array[1], "b", YELLOW),
+            self.change_cell_text(cost_cell_array[1], "17", YELLOW),
+            run_time=edge_change_run_time
         )
-        self.change_cell_text(node_cell_array[1], "b", YELLOW)
-        self.change_cell_text(node_cell_array[2], "c", YELLOW)
-        self.change_cell_text(node_cell_array[3], "d", YELLOW)
-        self.change_cell_text(cost_cell_array[1], "17", YELLOW)
-        self.change_cell_text(cost_cell_array[2], "12", YELLOW)
-        self.change_cell_text(cost_cell_array[3], "8", YELLOW)
-        self.color_edge(animated_graph.edges[("a", "d")], PINK)
-        self.change_cell_text(cost_cell_array[3], "8", PINK)
-        self.change_cell_text(node_cell_array[3], "d", PINK)
-        self.color_vertex(animated_graph[("d")], PINK)
+        network_x_graph.nodes["c"]["cost"] = 12
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "c")], YELLOW),
+            self.change_cell_text(node_cell_array[2], "c", YELLOW),
+            self.change_cell_text(cost_cell_array[2], "12", YELLOW),
+            run_time=edge_change_run_time
+        )
+        network_x_graph.nodes["d"]["cost"] = 8
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "d")], YELLOW),
+            self.change_cell_text(node_cell_array[3], "d", YELLOW),
+            self.change_cell_text(cost_cell_array[3], "8", YELLOW),
+            run_time=edge_change_run_time
+        )
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "d")], PINK),
+            self.change_cell_text(cost_cell_array[3], "8", PINK),
+            self.change_cell_text(node_cell_array[3], "d", PINK),
+            self.color_vertex(animated_graph[("d")], PINK),
+            run_time=edge_change_run_time
+        )
         # Step 3. Travel to node c
-        self.color_edge(animated_graph.edges[("c", "d")], YELLOW)
-        self.color_edge(animated_graph.edges[("d", "f")], YELLOW)
-        self.change_cell_text(node_cell_array[5], "f", YELLOW)
-        self.change_cell_text(cost_cell_array[5], "23", YELLOW)
+        self.play(
+            self.color_edge(animated_graph.edges[("c", "d")], YELLOW),
+            run_time=edge_change_run_time
+        )
+        network_x_graph.nodes["f"]["cost"] = 23
+        self.play(
+            self.color_edge(animated_graph.edges[("d", "f")], YELLOW),
+            self.change_cell_text(node_cell_array[5], "f", YELLOW),
+            self.change_cell_text(cost_cell_array[5], "23", YELLOW),
+            run_time=edge_change_run_time
+        )
         self.play(
             self.color_edge(animated_graph.edges[("a", "d")], GREEN),
             self.change_cell_text(cost_cell_array[3], "8", GREEN),
             self.change_cell_text(node_cell_array[3], "d", GREEN),
             self.color_vertex(animated_graph[("d")], GREEN),
-            run_time=2
+            run_time=edge_change_run_time
         )
-        self.color_edge(animated_graph.edges[("a", "c")], PINK)
-        self.change_cell_text(cost_cell_array[2], "12", PINK)
-        self.change_cell_text(node_cell_array[2], "c", PINK)
-        self.color_vertex(animated_graph[("c")], PINK)
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "c")], PINK),
+            self.change_cell_text(cost_cell_array[2], "12", PINK),
+            self.change_cell_text(node_cell_array[2], "c", PINK),
+            self.color_vertex(animated_graph[("c")], PINK),
+            run_time=edge_change_run_time
+        )
         # Step 4. Travel to node b
-        self.color_edge(animated_graph.edges[("b", "c")], YELLOW)
-        self.color_edge(animated_graph.edges[("c", "f")], YELLOW)
-        self.change_cell_text(cost_cell_array[1], "13", YELLOW)
-        self.color_edge(animated_graph.edges[("a", "c")], GREEN)
-        self.change_cell_text(cost_cell_array[2], "12", GREEN)
-        self.change_cell_text(node_cell_array[2], "c", GREEN)
-        self.color_vertex(animated_graph[("c")], GREEN)
-        self.color_edge(animated_graph.edges[("a", "c")], PINK)
-        self.color_edge(animated_graph.edges[("b", "c")], PINK)
-        self.change_cell_text(cost_cell_array[1], "13", PINK)
-        self.change_cell_text(node_cell_array[1], "b", PINK)
-        self.color_vertex(animated_graph[("b")], PINK)
+        network_x_graph.nodes["b"]["cost"] = 13
+        self.play(
+            self.color_edge(animated_graph.edges[("b", "c")], YELLOW),
+            self.change_cell_text(cost_cell_array[1], "13", YELLOW),
+            run_time=edge_change_run_time
+        )
+        self.play(
+            self.color_edge(animated_graph.edges[("c", "f")], YELLOW),
+            run_time=edge_change_run_time
+        )
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "c")], GREEN),
+            self.change_cell_text(cost_cell_array[2], "12", GREEN),
+            self.change_cell_text(node_cell_array[2], "c", GREEN),
+            self.color_vertex(animated_graph[("c")], GREEN),
+            run_time=edge_change_run_time
+        )
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "c")], PINK),
+            run_time=edge_change_run_time
+        )
+        self.play(
+            self.color_edge(animated_graph.edges[("b", "c")], PINK),
+            self.change_cell_text(cost_cell_array[1], "13", PINK),
+            self.change_cell_text(node_cell_array[1], "b", PINK),
+            self.color_vertex(animated_graph[("b")], PINK),
+            run_time=edge_change_run_time
+        )
         # Step 5. Travel to node e
-        self.color_edge(animated_graph.edges[("b", "e")], YELLOW)
-        self.change_cell_text(cost_cell_array[4], "17", YELLOW)
-        self.color_edge(animated_graph.edges[("a", "c")], GREEN)
-        self.color_edge(animated_graph.edges[("b", "c")], GREEN)
-        self.change_cell_text(cost_cell_array[1], "13", GREEN)
-        self.change_cell_text(node_cell_array[1], "b", GREEN)
-        self.color_vertex(animated_graph[("b")], GREEN)
-        self.color_edge(animated_graph.edges[("a", "c")], PINK)
-        self.color_edge(animated_graph.edges[("b", "c")], PINK)
-        self.color_edge(animated_graph.edges[("b", "e")], PINK)
-        self.change_cell_text(cost_cell_array[4], "17", PINK)
-        self.change_cell_text(node_cell_array[4], "e", PINK)
-        self.color_vertex(animated_graph[("e")], PINK)
+        network_x_graph.nodes["e"]["cost"] = 17
+        self.play(
+            self.color_edge(animated_graph.edges[("b", "e")], YELLOW),
+            self.change_cell_text(cost_cell_array[4], "17", YELLOW),
+            run_time=edge_change_run_time
+        )
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "c")], GREEN),
+            self.color_edge(animated_graph.edges[("b", "c")], GREEN),
+            self.change_cell_text(cost_cell_array[1], "13", GREEN),
+            self.change_cell_text(node_cell_array[1], "b", GREEN),
+            self.color_vertex(animated_graph[("b")], GREEN),
+            run_time=edge_change_run_time
+        )
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "c")], PINK),
+            run_time=edge_change_run_time
+        )
+        self.play(
+            self.color_edge(animated_graph.edges[("b", "c")], PINK),
+            run_time=edge_change_run_time
+        )
+        self.play(
+            self.color_edge(animated_graph.edges[("b", "e")], PINK),
+            self.change_cell_text(cost_cell_array[4], "17", PINK),
+            self.change_cell_text(node_cell_array[4], "e", PINK),
+            self.color_vertex(animated_graph[("e")], PINK),
+            run_time=edge_change_run_time
+        )
         # Step 6. Travel to node f
-        self.color_edge(animated_graph.edges[("e", "f")], YELLOW)
-        self.change_cell_text(cost_cell_array[5], "22", YELLOW)
-        self.color_edge(animated_graph.edges[("a", "c")], GREEN)
-        self.color_edge(animated_graph.edges[("b", "c")], GREEN)
-        self.color_edge(animated_graph.edges[("b", "e")], GREEN)
-        self.change_cell_text(cost_cell_array[4], "17", GREEN)
-        self.change_cell_text(node_cell_array[4], "e", GREEN)
-        self.color_vertex(animated_graph[("e")], GREEN)
-        self.color_edge(animated_graph.edges[("a", "c")], PINK)
-        self.color_edge(animated_graph.edges[("b", "c")], PINK)
-        self.color_edge(animated_graph.edges[("b", "e")], PINK)
-        self.color_edge(animated_graph.edges[("e", "f")], PINK)
-        self.change_cell_text(cost_cell_array[5], "22", PINK)
-        self.change_cell_text(node_cell_array[5], "f", PINK)
-        self.color_vertex(animated_graph[("f")], PINK)
+        network_x_graph.nodes["f"]["cost"] = 22
+        self.play(
+            self.color_edge(animated_graph.edges[("e", "f")], YELLOW),
+            self.change_cell_text(cost_cell_array[5], "22", YELLOW),
+            run_time=edge_change_run_time
+        )
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "c")], GREEN),
+            self.color_edge(animated_graph.edges[("b", "c")], GREEN),
+            self.color_edge(animated_graph.edges[("b", "e")], GREEN),
+            self.change_cell_text(cost_cell_array[4], "17", GREEN),
+            self.change_cell_text(node_cell_array[4], "e", GREEN),
+            self.color_vertex(animated_graph[("e")], GREEN),
+            run_time=edge_change_run_time
+        )
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "c")], PINK),
+            run_time=edge_change_run_time
+        )
+        self.play(
+            self.color_edge(animated_graph.edges[("b", "c")], PINK),
+            run_time=edge_change_run_time
+        )
+        self.play(
+            self.color_edge(animated_graph.edges[("b", "e")], PINK),
+            run_time=edge_change_run_time
+        )
+        self.play(
+            self.color_edge(animated_graph.edges[("e", "f")], PINK),
+            self.change_cell_text(cost_cell_array[5], "22", PINK),
+            self.change_cell_text(node_cell_array[5], "f", PINK),
+            self.color_vertex(animated_graph[("f")], PINK),
+            run_time=edge_change_run_time
+        )
         # Step 7. Mark node f as visited
-        self.color_edge(animated_graph.edges[("a", "c")], GREEN)
-        self.color_edge(animated_graph.edges[("b", "c")], GREEN)
-        self.color_edge(animated_graph.edges[("b", "e")], GREEN)
-        self.color_edge(animated_graph.edges[("e", "f")], GREEN)
-        self.change_cell_text(cost_cell_array[5], "22", GREEN)
-        self.change_cell_text(node_cell_array[5], "f", GREEN)
-        self.color_vertex(animated_graph[("f")], GREEN)
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "c")], GREEN),
+            self.color_edge(animated_graph.edges[("b", "c")], GREEN),
+            self.color_edge(animated_graph.edges[("b", "e")], GREEN),
+            self.color_edge(animated_graph.edges[("e", "f")], GREEN),
+            self.change_cell_text(cost_cell_array[5], "22", GREEN),
+            self.change_cell_text(node_cell_array[5], "f", GREEN),
+            self.color_vertex(animated_graph[("f")], GREEN),
+            run_time=edge_change_run_time
+        )
         # Step 8. Indicate algorithm completion by marking source node as visited
-        self.color_vertex(animated_graph[("a")], GREEN)
-        self.change_cell_text(node_cell_array[0], "a", GREEN)
-        self.change_cell_text(cost_cell_array[0], "0", GREEN)
+        self.play(
+            self.color_vertex(animated_graph[("a")], GREEN),
+            self.change_cell_text(node_cell_array[0], "a", GREEN),
+            self.change_cell_text(cost_cell_array[0], "0", GREEN),
+            run_time=edge_change_run_time
+        )
         # Step 9. Uncolor unvisted edges and wait for 5 seconds
-        self.color_edge(animated_graph.edges[("a", "b")], BLUE)
-        self.color_edge(animated_graph.edges[("c", "d")], BLUE)
-        self.color_edge(animated_graph.edges[("c", "f")], BLUE)
-        self.color_edge(animated_graph.edges[("d", "f")], BLUE)
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "b")], BLUE),
+            self.color_edge(animated_graph.edges[("c", "d")], BLUE),
+            self.color_edge(animated_graph.edges[("c", "f")], BLUE),
+            self.color_edge(animated_graph.edges[("d", "f")], BLUE),
+            run_time=edge_change_run_time
+        )
         self.wait(5)
         # Step 10. Uncolor all other edges
-        self.color_edge(animated_graph.edges[("a", "c")], BLUE)
-        self.color_edge(animated_graph.edges[("a", "d")], BLUE)
-        self.color_edge(animated_graph.edges[("b", "c")], BLUE)
-        self.color_edge(animated_graph.edges[("b", "e")], BLUE)
-        self.color_edge(animated_graph.edges[("e", "f")], BLUE)
-        # Step 10. Uncolor Table Elements
-        for cell_value in cost_cell_array:
-            self.change_cell_text(cell_value, "0", WHITE)
-        for cell_value in node_cell_array:
-            self.change_cell_text(cell_value, "0", WHITE)
+        self.play(
+            self.color_edge(animated_graph.edges[("a", "c")], BLUE),
+            self.color_edge(animated_graph.edges[("a", "d")], BLUE),
+            self.color_edge(animated_graph.edges[("b", "c")], BLUE),
+            self.color_edge(animated_graph.edges[("b", "e")], BLUE),
+            self.color_edge(animated_graph.edges[("e", "f")], BLUE),
+            run_time=edge_change_run_time
+        )
+        # Step 10. Uncolor Vertices
+        self.play(
+            self.color_vertex(animated_graph[("a")], WHITE),
+            self.color_vertex(animated_graph[("b")], WHITE),
+            self.color_vertex(animated_graph[("c")], WHITE),
+            self.color_vertex(animated_graph[("d")], WHITE),
+            self.color_vertex(animated_graph[("e")], WHITE),
+            self.color_vertex(animated_graph[("f")], WHITE),
+            run_time=edge_change_run_time
+        )
+        # Step 11. Uncolor Table Elements
+        self.play(
+            self.change_cell_text(node_cell_array[0], "a", WHITE),
+            self.change_cell_text(node_cell_array[1], "b", WHITE),
+            self.change_cell_text(node_cell_array[2], "c", WHITE),
+            self.change_cell_text(node_cell_array[3], "d", WHITE),
+            self.change_cell_text(node_cell_array[4], "e", WHITE),
+            self.change_cell_text(node_cell_array[5], "f", WHITE),
+            self.change_cell_text(cost_cell_array[0], str(network_x_graph.nodes["a"]["cost"]), WHITE),
+            self.change_cell_text(cost_cell_array[1], str(network_x_graph.nodes["b"]["cost"]), WHITE),
+            self.change_cell_text(cost_cell_array[2], str(network_x_graph.nodes["c"]["cost"]), WHITE),
+            self.change_cell_text(cost_cell_array[3], str(network_x_graph.nodes["d"]["cost"]), WHITE),
+            self.change_cell_text(cost_cell_array[4], str(network_x_graph.nodes["e"]["cost"]), WHITE),
+            self.change_cell_text(cost_cell_array[5], str(network_x_graph.nodes["f"]["cost"]), WHITE),
+            run_time=edge_change_run_time
+        )
+        self.wait(5)
 
     # CUSTOM ANIMATION FUNCTIONS
     # Function that colors the fill of a vertex
     def color_vertex(self, vertex, color):
-        self.play(
-            vertex[0].animate.set_color(color),
-            vertex[1].animate.set_color(BLACK),
-            run_time=3
-        )
+        return vertex[0].animate.set_color(color), vertex[1].animate.set_color(BLACK)
+
     # Function that colors an edge in a graph
     def color_edge(self, edge, color):
-        self.play(edge.animate.set_color(color), run_time = 1.5)
+        return edge.animate.set_color(color)
 
     # Function that changes the text of a cell in a table
     def change_cell_text(self, cell, text, color):
-        self.play(Transform(cell, Text(text).scale(0.7).move_to(cell).set_color(color)))
+        return Transform(cell, Text(text).scale(0.7).move_to(cell).set_color(color))
