@@ -1,6 +1,6 @@
 # Wesley Lowman
 # COMP 5970
-# Manim Animation Project
+# Manim Animation Project - Fall 2022
 # Original Psuedocode for IPQ and Dijkstra's algorithm created by Dr. Haynes Heaton
 # Implementation code for IPQ created by Dr. Haynes Heaton
 

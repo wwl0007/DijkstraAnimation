@@ -1,5 +1,6 @@
 # Code created by Dr. Haynes Heaton
 # COMP 5970
+# Implemented by Wesley Lowman - Fall 2022 Final Project
 
 class IndexedPriorityQueue:
     def __init__(self):
