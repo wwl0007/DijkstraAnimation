@@ -62,7 +62,25 @@ class Run(Scene):
         ).arrange_in_grid(buff=1)
 
         # Create and position the table and graph that will be used in this animation
-        self.play(table.create())
+        rows = table.get_rows()
+        labels = table.get_labels()
+        columns = table.get_columns()
+        vertical_lines = table.get_vertical_lines()
+        horizontal_lines = table.get_horizontal_lines()
+        self.play(Create(vertical_lines))
+        self.play(Create(horizontal_lines))
+        self.play(Create(labels))
+        self.play(
+            Create(columns[1][1]),
+            Create(columns[1][2]),
+            Create(columns[1][3]),
+            Create(columns[1][4]),
+            Create(columns[1][5]),
+            Create(columns[1][6])
+        )
+        #self.play(table.create())
+
+
         self.play(Create(graph, run_time = 5))
         self.play(graph.animate.shift(0.35 * RIGHT))
 
@@ -104,11 +122,17 @@ class Run(Scene):
 
         # Run the animation - comment out the animation version that you don't want to run
         # You can either run the hard-coded version or the algorithmic version
-        #self.play_hardcoded_animation(G, graph, cost_table_cells, node_table_cells)
-        self.play_algorithmic_animation_class_version(G, source_node, graph, cost_table_cells, node_table_cells)
+        self.play_hardcoded_animation(G, graph, cost_table_cells, node_table_cells)
+        #self.play_algorithmic_animation_class_version(G, source_node, graph, cost_table_cells, node_table_cells)
 
         # Initiate a wait process to ensure the animation finishes as intended
         self.wait(5)
+
+
+
+
+
+
 
     # FULL ANIMATION FUNCTIONS
     # DIJKSTRAS ALGORITHM IMPLEMENTATION (ALGORITHMIC VERSION - CLASS)
@@ -123,66 +147,81 @@ class Run(Scene):
             network_x_graph.nodes[x]['dist'] = float('inf')
             network_x_graph.nodes[x]['parent'] = None
             ipq.push(x, network_x_graph.nodes[x]['dist'])
-            self.play(
-                self.color_vertex(animated_graph[("a")], RED),
-                self.color_vertex_label(animated_graph[("a")], BLACK),
-                run_time=vertex_change_run_time
-            )
-            self.wait(5)
             # No animations quite yet
+        print(ipq.min_heap)
         ipq.decrease_key(v, 0)
+        print(ipq.min_heap)
         while len(ipq.min_heap) > 0:
             # Pop the min and color correponding vertex
             s = ipq.popmin()
             v = s[0]
+            network_x_graph.nodes[v]['dist'] = s[1]
             self.play(
-                self.color_vertex(animated_graph[("a")], BLUE),
-                self.color_vertex_label(animated_graph[("a")], BLACK),
+                self.color_vertex(animated_graph[(v)], BLUE),
+                self.color_vertex_label(animated_graph[(v)], BLACK),
                 run_time=vertex_change_run_time
             )
-            self.wait(5)
-            # Color vertex and corresponding cells
-            for (x, e) in network_x_graph.edges(v):
+            self.wait(2)
+            for (x, e) in network_x_graph.edges([v]):
+                # Had to add in a variable swapper due to manim limitations
+                if x > e:
+                    temp = e
+                    e = x
+                    x = temp
                 if not visited[x]:
-                    self.play(
-                        self.color_vertex(animated_graph[("a")], GREEN),
-                        self.color_vertex_label(animated_graph[("a")], BLACK),
-                        run_time=vertex_change_run_time
-                    )
-                    self.wait(5)
-                    self.relax(network_x_graph, v, x, e, ipq)
-            visited[v] = True
-            self.play(
-                self.color_vertex(animated_graph[("a")], PINK),
-                self.color_vertex_label(animated_graph[("a")], BLACK),
-                run_time=vertex_change_run_time
-            )
-            self.wait(5)
+                    print(x)
+                    print(network_x_graph.nodes[x]['dist'])
+                    print(v)
+                    print(network_x_graph.nodes[v]['dist'])
 
-    def relax(self, network_x_graph, v, x, e, queue):
+                    self.relax(network_x_graph, v, x, e, ipq, animated_graph, cost_cell_array, node_cell_array)
+            visited[v] = True
+
+    def relax(self, network_x_graph, v, x, e, queue, animated_graph, cost_cell_array, node_cell_array):
+        # Initialize Animation Parameters
+        edge_change_run_time = 1.75
+        vertex_change_run_time = 1.75
         # color edge and corresponding cell values
+
+        index_value = -1
+        if e == 'a':
+            index_value = 0
+        elif e == 'b':
+            index_value = 1
+        elif e == 'c':
+            index_value = 2
+        elif e == 'd':
+            index_value = 3
+        elif e == 'e':
+            index_value = 4
+        elif e == 'f':
+            index_value = 5
+        '''
         self.play(
-            self.color_vertex(animated_graph[("a")], YELLOW),
-            self.color_vertex_label(animated_graph[("a")], BLACK),
-            run_time=vertex_change_run_time
+            self.color_edge(animated_graph.edges[(x, e)], YELLOW), # Good to go
+            self.change_cell_text(cost_cell_array[index_value], str(network_x_graph.edges[x, e]['weight']), YELLOW),
+            self.change_cell_text(node_cell_array[index_value], e, YELLOW),
+            run_time=edge_change_run_time
         )
-        self.wait(5)
+        '''
+
         if (network_x_graph.nodes[v]['dist'] + network_x_graph.edges[x, e]['weight']) < (network_x_graph.nodes[x]['dist']):
             # color edges green
+            print("hurray!")
+            '''
+            self.play(
+            self.color_edge(animated_graph.edges[(x, e)], GREEN), # Good to go
+            self.change_cell_text(cost_cell_array[index_value], str(network_x_graph.edges[x, e]['weight']), YELLOW),
+            run_time=edge_change_run_time
+            )
+            '''
             network_x_graph.nodes[x]['parent'] = v
-            self.play(
-                self.color_vertex(animated_graph[("a")], ORANGE),
-                self.color_vertex_label(animated_graph[("a")], BLACK),
-                run_time=vertex_change_run_time
-            )
-            self.wait(5)
             queue.decrease_key(x, network_x_graph.nodes[v]['dist'] + network_x_graph.edges[x, e]['weight'])
-            self.play(
-                self.color_vertex(animated_graph[("a")], PURPLE),
-                self.color_vertex_label(animated_graph[("a")], BLACK),
-                run_time=vertex_change_run_time
-            )
-            self.wait(5)
+
+
+
+
+
 
     # HARDCODED DEMONSTRATION (HARDCODED VERSION)
     def play_hardcoded_animation(self, network_x_graph, animated_graph, cost_cell_array, node_cell_array):
