@@ -174,6 +174,7 @@ class Run(Scene):
                     x = temp
                 if not visited[x]:
                     self.relax(network_x_graph, v, x, e, ipq, animated_graph, cost_cell_array, node_cell_array)
+                    
             visited[v] = True
             index_value = -1
             if v == 'a':
