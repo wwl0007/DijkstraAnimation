@@ -78,8 +78,6 @@ class Run(Scene):
             Create(columns[1][5]),
             Create(columns[1][6])
         )
-        #self.play(table.create())
-
 
         self.play(Create(graph, run_time = 5))
         self.play(graph.animate.shift(0.35 * RIGHT))
@@ -122,8 +120,8 @@ class Run(Scene):
 
         # Run the animation - comment out the animation version that you don't want to run
         # You can either run the hard-coded version or the algorithmic version
-        self.play_hardcoded_animation(G, graph, cost_table_cells, node_table_cells)
-        #self.play_algorithmic_animation_class_version(G, source_node, graph, cost_table_cells, node_table_cells)
+        #self.play_hardcoded_animation(G, graph, cost_table_cells, node_table_cells)
+        self.play_algorithmic_animation_class_version(G, source_node, graph, cost_table_cells, node_table_cells)
 
         # Initiate a wait process to ensure the animation finishes as intended
         self.wait(5)
@@ -156,24 +154,34 @@ class Run(Scene):
             s = ipq.popmin()
             v = s[0]
             network_x_graph.nodes[v]['dist'] = s[1]
+
+            '''
             self.play(
                 self.color_vertex(animated_graph[(v)], BLUE),
                 self.color_vertex_label(animated_graph[(v)], BLACK),
                 run_time=vertex_change_run_time
             )
-            self.wait(2)
+            '''
+            #self.wait(2)
+
             for (x, e) in network_x_graph.edges([v]):
+                print("-----------------Test1------------------")
+                print(x,e)
+                print(x)
+                print(v)
+                print("----------------------------------------")
                 # Had to add in a variable swapper due to manim limitations
                 if x > e:
                     temp = e
                     e = x
                     x = temp
                 if not visited[x]:
+                    print("-----------------Test2------------------")
                     print(x)
                     print(network_x_graph.nodes[x]['dist'])
                     print(v)
                     print(network_x_graph.nodes[v]['dist'])
-
+                    print("----------------------------------------")
                     self.relax(network_x_graph, v, x, e, ipq, animated_graph, cost_cell_array, node_cell_array)
             visited[v] = True
 
@@ -181,7 +189,6 @@ class Run(Scene):
         # Initialize Animation Parameters
         edge_change_run_time = 1.75
         vertex_change_run_time = 1.75
-        # color edge and corresponding cell values
 
         index_value = -1
         if e == 'a':
