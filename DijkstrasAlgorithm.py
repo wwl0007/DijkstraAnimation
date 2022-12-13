@@ -146,44 +146,56 @@ class Run(Scene):
             network_x_graph.nodes[x]['parent'] = None
             ipq.push(x, network_x_graph.nodes[x]['dist'])
             # No animations quite yet
-        print(ipq.min_heap)
         ipq.decrease_key(v, 0)
-        print(ipq.min_heap)
+        self.play(
+                self.color_vertex(animated_graph[(v)], PINK),
+                self.color_vertex_label(animated_graph[(v)], BLACK),
+                self.change_cell_text(cost_cell_array[0], str(0), PINK),
+                self.change_cell_text(node_cell_array[0], v, PINK),
+                run_time=vertex_change_run_time
+            )
         while len(ipq.min_heap) > 0:
             # Pop the min and color correponding vertex
             s = ipq.popmin()
             v = s[0]
             network_x_graph.nodes[v]['dist'] = s[1]
-
-            '''
             self.play(
-                self.color_vertex(animated_graph[(v)], BLUE),
+                self.color_vertex(animated_graph[(v)], PINK),
                 self.color_vertex_label(animated_graph[(v)], BLACK),
                 run_time=vertex_change_run_time
             )
-            '''
-            #self.wait(2)
+            self.wait(2)
 
             for (x, e) in network_x_graph.edges([v]):
-                print("-----------------Test1------------------")
-                print(x,e)
-                print(x)
-                print(v)
-                print("----------------------------------------")
                 # Had to add in a variable swapper due to manim limitations
                 if x > e:
                     temp = e
                     e = x
                     x = temp
                 if not visited[x]:
-                    print("-----------------Test2------------------")
-                    print(x)
-                    print(network_x_graph.nodes[x]['dist'])
-                    print(v)
-                    print(network_x_graph.nodes[v]['dist'])
-                    print("----------------------------------------")
                     self.relax(network_x_graph, v, x, e, ipq, animated_graph, cost_cell_array, node_cell_array)
             visited[v] = True
+            index_value = -1
+            if v == 'a':
+                index_value = 0
+            elif v == 'b':
+                index_value = 1
+            elif v == 'c':
+                index_value = 2
+            elif v == 'd':
+                index_value = 3
+            elif v == 'e':
+                index_value = 4
+            elif v == 'f':
+                index_value = 5
+            self.play(
+                self.color_vertex(animated_graph[(v)], GREEN),
+                self.color_vertex_label(animated_graph[(v)], BLACK),
+                self.change_cell_text(cost_cell_array[index_value], str(network_x_graph.nodes[v]['dist']), GREEN),
+                self.change_cell_text(node_cell_array[index_value], v, GREEN),
+                run_time=vertex_change_run_time
+            )
+
 
     def relax(self, network_x_graph, v, x, e, queue, animated_graph, cost_cell_array, node_cell_array):
         # Initialize Animation Parameters
@@ -203,27 +215,28 @@ class Run(Scene):
             index_value = 4
         elif e == 'f':
             index_value = 5
-        '''
-        self.play(
-            self.color_edge(animated_graph.edges[(x, e)], YELLOW), # Good to go
-            self.change_cell_text(cost_cell_array[index_value], str(network_x_graph.edges[x, e]['weight']), YELLOW),
-            self.change_cell_text(node_cell_array[index_value], e, YELLOW),
-            run_time=edge_change_run_time
-        )
-        '''
 
-        if (network_x_graph.nodes[v]['dist'] + network_x_graph.edges[x, e]['weight']) < (network_x_graph.nodes[x]['dist']):
-            # color edges green
-            print("hurray!")
-            '''
-            self.play(
-            self.color_edge(animated_graph.edges[(x, e)], GREEN), # Good to go
-            self.change_cell_text(cost_cell_array[index_value], str(network_x_graph.edges[x, e]['weight']), YELLOW),
+        self.play(
+            self.color_edge(animated_graph.edges[(x, e)], YELLOW),
             run_time=edge_change_run_time
             )
-            '''
-            network_x_graph.nodes[x]['parent'] = v
-            queue.decrease_key(x, network_x_graph.nodes[v]['dist'] + network_x_graph.edges[x, e]['weight'])
+
+
+        print(network_x_graph.nodes[v]['dist'] + network_x_graph.edges[x, e]['weight'])
+        print(network_x_graph.nodes[e]['dist'])
+
+        if (network_x_graph.nodes[v]['dist'] + network_x_graph.edges[x, e]['weight']) < (network_x_graph.nodes[e]['dist']):
+            # color edges green
+            print("hurray!")
+            network_x_graph.nodes[e]['dist'] = network_x_graph.nodes[v]['dist'] + network_x_graph.edges[x, e]['weight']
+            network_x_graph.nodes[e]['parent'] = v
+            queue.decrease_key(e, (network_x_graph.nodes[v]['dist'] + network_x_graph.edges[x, e]['weight']))
+            self.play(
+                self.color_edge(animated_graph.edges[(x, e)], PINK),
+                self.change_cell_text(cost_cell_array[index_value], str(network_x_graph.nodes[e]['dist']), PINK),
+                self.change_cell_text(node_cell_array[index_value], e, PINK),
+            run_time=edge_change_run_time
+            )
 
 
 
