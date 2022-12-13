@@ -174,7 +174,7 @@ class Run(Scene):
                     x = temp
                 if not visited[x]:
                     self.relax(network_x_graph, v, x, e, ipq, animated_graph, cost_cell_array, node_cell_array)
-                    
+
             visited[v] = True
             index_value = -1
             if v == 'a':
@@ -222,7 +222,9 @@ class Run(Scene):
             run_time=edge_change_run_time
             )
 
-
+        print("NODE CHECK")
+        print(network_x_graph.nodes[v])
+        print(network_x_graph.nodes[v]['dist'])
         print(network_x_graph.nodes[v]['dist'] + network_x_graph.edges[x, e]['weight'])
         print(network_x_graph.nodes[e]['dist'])
 
@@ -231,6 +233,8 @@ class Run(Scene):
             print("hurray!")
             network_x_graph.nodes[e]['dist'] = network_x_graph.nodes[v]['dist'] + network_x_graph.edges[x, e]['weight']
             network_x_graph.nodes[e]['parent'] = v
+            print("parent: ")
+            print(network_x_graph.nodes[e]['parent'])
             queue.decrease_key(e, (network_x_graph.nodes[v]['dist'] + network_x_graph.edges[x, e]['weight']))
             self.play(
                 self.color_edge(animated_graph.edges[(x, e)], PINK),
